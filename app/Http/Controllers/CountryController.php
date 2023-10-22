@@ -12,7 +12,7 @@ class CountryController extends Controller
     // just show the form to the user
     public function country()
     {
-        return view('forms.country_form');
+        return view('country_form');
     }
 
     // save the data to db
