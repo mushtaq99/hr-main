@@ -46,12 +46,20 @@
         <tr>
             <th>Country Name</th>
             <th>Country Code</th>
+            <th>Actions</th>
 
         </tr>
         @foreach($data as $dt)
             <tr>
                 <td>{{$dt['name']}}</td>
                 <td>{{$dt['code']}}</td>
+                <td>
+                    <a href="/country/{{$dt['id']}}/edit" class="btn btn-primary btn-sm">View</a>
+                    <a href="/country/{{$dt['id']}}/edit" class="btn btn-warning btn-sm">Edit</a>
+                    <a href="/country/{{$dt['id']}}/delete" class="btn btn-danger btn-sm"> Delete</a>
+                </td>
+
+
             </tr>
         @endforeach
 
