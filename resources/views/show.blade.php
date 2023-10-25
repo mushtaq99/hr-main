@@ -54,8 +54,7 @@
                 <td>{{$dt['name']}}</td>
                 <td>{{$dt['code']}}</td>
                 <td>
-                    <a href="/country/{{$dt['id']}}/edit" class="btn btn-primary btn-sm">View</a>
-                    <a href="/country/{{$dt['id']}}/edit" class="btn btn-warning btn-sm">Edit</a>
+                    &nbsp;&nbsp; <a href="/country/{{$dt['id']}}/edit" class="btn btn-warning btn-sm">Edit</a> &nbsp;
                     <a href="/country/{{$dt['id']}}/delete" class="btn btn-danger btn-sm"> Delete</a>
                 </td>
 

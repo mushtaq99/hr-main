@@ -18,19 +18,24 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/country',[CountryController::class,'country']);
-Route::post('/country',[CountryController::class,'saveData']);
-Route::get('/show',[CountryController::class,'show']);
+
+
+// group all the related Routes to one group like bellow
+Route::group([
+    'prefix'=>'/country',
+    'controller' => CountryController::class,
+], function () {
+    Route::get('/', 'country');
+    Route::post('/',  'saveData');
 
 // the bellow {info} will be compare to country model inside controoler id = id
-Route::get('/country/{info}/edit',[CountryController::class,'edit']);
-Route::put('/country/{id}',[CountryController::class,'update']);
-Route::get('/country/{id}/delete',[CountryController::class,'delete']);
-Route::delete('/country/{info}',[CountryController::class,'destroy']);
+    Route::get('/{info}/edit',  'edit');
+    Route::put('/{id}',  'update');
+    Route::get('/{id}/delete',  'delete');
+    Route::delete('/{info}', 'destroy');
+});
+Route::get('/show',[CountryController::class,'show']);
 
 
-//Route::get('/{post}/edit', 'edit')->name('edit');
-//Route::put('/{post}', 'update')->name('update');
-//
-//Route::get('/{post}/delete', 'delete')->name('delete');
-//Route::delete('/{post}', 'destroy')->name('destroy');
+
+

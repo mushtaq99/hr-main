@@ -36,7 +36,7 @@ class CountryController extends Controller
 
     }
 
-    // model binding COuntry model compare the value with info id same then ...
+    // model binding Country model compare the value with info id same then ...
     public function edit(country $info)
     {
         return view('edit', ['info' => $info]);
@@ -44,24 +44,25 @@ class CountryController extends Controller
 
     public function update($id, CountryEditRequest $request)
     {
-
-        country::where('id', $id)->
-        update([
-            'name' => $request->name,
-            'code' => $request->code,
-        ]);
+        country::where('id', $id)
+            ->update([
+                'name' => $request->name,
+                'code' => $request->code,
+            ]);
 
         return redirect('/show');
 
     }
 
-    public function delete( $info){
-        $del = country::where('id',$info)->first();
-        return view('delete',['info' => $del]);
+    public function delete($info)
+    {
+        $del = country::where('id', $info)->first();
+        return view('delete', ['info' => $del]);
     }
 
-    public function destroy($info){
-        country::where('id',$info)
+    public function destroy($info)
+    {
+        country::where('id', $info)
             ->delete();
         return redirect('/show')->with('message', 'Country Deleted successfully .');
     }
