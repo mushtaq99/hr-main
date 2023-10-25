@@ -36,7 +36,7 @@ class CountryController extends Controller
 
     }
 
-    // model binding Country model compare the value with info id same then ...
+    // model binding with route Country model compare the value with info id same then ...
     public function edit(country $info)
     {
         return view('edit', ['info' => $info]);

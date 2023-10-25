@@ -28,12 +28,14 @@ Route::group([
     Route::get('/', 'country');
     Route::post('/',  'saveData');
 
-// the bellow {info} will be compare to country model inside controoler id = id
+// the bellow {info} will be compare to country model inside controller id = id
     Route::get('/{info}/edit',  'edit');
     Route::put('/{id}',  'update');
     Route::get('/{id}/delete',  'delete');
     Route::delete('/{info}', 'destroy');
 });
+
+
 Route::get('/show',[CountryController::class,'show']);
 
 
