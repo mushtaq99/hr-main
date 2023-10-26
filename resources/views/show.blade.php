@@ -64,6 +64,8 @@
 
 
     </table>
+{{-- bellow method is used for pagination only like show 10 pages with next and previous button--}}
+    {{ $data->links()}}
 </div>
 </body>
 </html>

@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        country::factory()->count(10)->create();
+        country::factory()->count(20)->create();
 //        $this->call([
 //            CountrySeeder::class
 //        ]);

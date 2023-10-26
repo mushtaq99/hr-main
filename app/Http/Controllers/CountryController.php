@@ -31,7 +31,7 @@ class CountryController extends Controller
     // get the data from db and show them inside view
     public function show()
     {
-        $data = country::all();
+        $data = country::paginate(10);
         return view('show', ['data' => $data]);
 
     }

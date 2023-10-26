@@ -22,8 +22,8 @@ class CountryEditRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'max:50'],
-            'code' => ['required', 'max:5']
+            'name' => ['required', 'max:500'],
+            'code' => ['required', 'max:50']
         ];
     }
 }
