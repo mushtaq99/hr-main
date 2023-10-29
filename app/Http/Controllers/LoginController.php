@@ -13,7 +13,7 @@ class LoginController extends Controller
 
         $request->session()->invalidate();
         $request->session()-> regenerateToken();
-        return redirect()->route('register');
+        return redirect()->route('login');
 
     }
 

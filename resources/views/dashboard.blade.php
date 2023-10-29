@@ -18,6 +18,9 @@
             background-color: #f1f1f1;
             height: 100%;
         }
+        .banner{
+            background-color: #6ac07c;
+        }
 
         /* On small screens, set height to 'auto' for the grid */
         @media screen and (max-width: 767px) {
@@ -53,54 +56,54 @@
 <div class="container-fluid">
     <div class="row content">
         <div class="col-sm-3 sidenav hidden-xs">
-            <h2>Logo</h2>
+            <h2>Menu</h2>
             <ul class="nav nav-pills nav-stacked">
                 <li class="active"><a href="#section1">Dashboard</a></li>
-                <li><a href="#section2">Age</a></li>
-                <li><a href="#section3">Gender</a></li>
+                <li><a href="#section2">License</a></li>
+                <li><a href="#section3">Inspections</a></li>
                 <li><a href="/logout">Logout</a></li>
             </ul>
             <br>
         </div>
         <br>
 
-        <div class="col-sm-9">
-            <div class="well">
-                <h4>Dashboard</h4>
-                <p>Some text..</p>
+        <div class="col-sm-9"  >
+            <div class="well banner">
+                <h4>Food Safety & Halal Food Authority</h4>
+                <p>License Dashboard</p>
             </div>
             <div class="row">
                 <div class="col-sm-3">
                     <div class="well">
-                        <h4>Users</h4>
+                        <h4>License</h4>
                         <p>1 Million</p>
                     </div>
                 </div>
                 <div class="col-sm-3">
                     <div class="well">
-                        <h4>Pages</h4>
+                        <h4>Inspections</h4>
                         <p>100 Million</p>
                     </div>
                 </div>
                 <div class="col-sm-3">
                     <div class="well">
-                        <h4>Sessions</h4>
+                        <h4>Discards</h4>
                         <p>10 Million</p>
                     </div>
                 </div>
                 <div class="col-sm-3">
                     <div class="well">
-                        <h4>Bounce</h4>
-                        <p>30%</p>
+                        <h4>Improvement Notices</h4>
+                        <p>30 Million</p>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-sm-4">
                     <div class="well">
-                        <p>Text</p>
-                        <p>Text</p>
-                        <p>Text</p>
+                        <p>DIVISIONS REPORT</p>
+                        <p>DISTRICT REPORT </p>
+                        <p>AD REPORT</p>
                     </div>
                 </div>
                 <div class="col-sm-4">
@@ -121,12 +124,12 @@
             <div class="row">
                 <div class="col-sm-8">
                     <div class="well">
-                        <p>Text</p>
+                        <p>DIVISION GRAPH</p>
                     </div>
                 </div>
                 <div class="col-sm-4">
                     <div class="well">
-                        <p>Text</p>
+                        <p>DISTRICT GRAPH</p>
                     </div>
                 </div>
             </div>

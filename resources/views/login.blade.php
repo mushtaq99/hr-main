@@ -44,8 +44,8 @@
         @csrf
         <h2 class="text-center">Log in</h2>
         <div class="form-group">
-            <input type="text" class="form-control" placeholder="name" name="name" value="{{ old('name') }}">
-            @error('name')
+            <input type="text" class="form-control" placeholder="email" name="email" value="{{ old('email') }}">
+            @error('email')
             <p class="text-danger text-sm">{{ $message }}</p>
             @enderror
         </div>

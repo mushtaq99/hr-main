@@ -3,6 +3,7 @@
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
+use App\Models\country;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,6 +16,21 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::get('/test', function () {
+    return country::first();
+
+});
+
+// now with help of relationship define in models the above method return single country info
+// now if we want to return country info along with user details it is so simple due to relationship define like
+
+Route::get('tests', function () {
+
+    // in bellow line the user is actually function that we define inside  country modelÏ
+    return country::with('user')->first();
+
+});
 
 Route::get('/', function () {
     return view('welcome');

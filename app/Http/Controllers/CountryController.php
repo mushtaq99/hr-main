@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CountryEditRequest;
 use App\Http\Requests\CountryRequest;
 use App\Models\country;
+use Illuminate\Support\Facades\Auth;
 
 
 class CountryController extends Controller
@@ -20,6 +21,7 @@ class CountryController extends Controller
     public function saveData(CountryRequest $request)
     {
         country::create([
+            'user_id'=> Auth::user()->id,
             'name' => $request->name,
             'code' => $request->code,
         ]);

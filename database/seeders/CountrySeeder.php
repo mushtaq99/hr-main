@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
 use App\Models\country;
+use App\Models\User;
+use Illuminate\Database\Seeder;
 
 class CountrySeeder extends Seeder
 {
@@ -13,9 +13,17 @@ class CountrySeeder extends Seeder
      */
     public function run(): void
     {
-        country::create([
-            'name'=> fake()->unique()->country,
-            'code'=> fake()->unique()->countryCode
-        ]);
+        $user = User::factory([
+            'name'=> 'Mushtaq'
+        ])->create();
+
+        country::factory()
+            ->for($user)
+            ->count(20)->create();
+
+//        country::create([
+//            'name'=> fake()->unique()->country,
+//            'code'=> fake()->unique()->countryCode
+//        ]);
     }
 }

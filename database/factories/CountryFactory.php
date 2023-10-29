@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,7 +17,9 @@ class CountryFactory extends Factory
      */
     public function definition(): array
     {
+        //this->faker->sentence,
         return [
+            'user_id'=> User::factory(),
             'name'=> fake()->country(),
             'code'=> fake()->countryCode(),
         ];
