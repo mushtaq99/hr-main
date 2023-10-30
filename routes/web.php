@@ -1,9 +1,6 @@
 <?php
 
-use App\Http\Controllers\CountryController;
-use App\Http\Controllers\LoginController;
-use App\Http\Controllers\RegisterController;
-use App\Models\country;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,58 +14,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/test', function () {
-    return country::first();
-
-});
-
-// now with help of relationship define in models the above method return single country info
-// now if we want to return country info along with user details it is so simple due to relationship define like
-
-Route::get('tests', function () {
-
-    // in bellow line the user is actually function that we define inside  country modelÏ
-    return country::with('user')->first();
-
-});
-
 Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
-// group all the related Routes to one group like bellow
-Route::group([
-    'prefix' => '/country',
-    'controller' => CountryController::class,
-    'middleware' => ['auth'],
-], function () {
-    Route::get('/', 'country');
-    Route::post('/', 'saveData');
-
-// the bellow {info} will be compare to country model inside controller id = id
-    Route::get('/{info}/edit', 'edit');
-    Route::put('/{id}', 'update');
-    Route::get('/{id}/delete', 'delete');
-    Route::delete('/{info}', 'destroy');
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/show', [CountryController::class, 'show']);
-
-Route::view('/register', 'register')->name('register');
-
-Route::post('/register', [RegisterController::class, 'create']);
-
-Route::view('/dashboard', 'dashboard')->middleware('auth');
-Route::get('/logout', [LoginController::class, 'destroy']);
-
-Route::get('/login', [LoginController::class, 'show'])
-    ->name('login')
-    ->middleware('throttle:5,1');
-
-Route::post('/login', [LoginController::class, 'store'])
-    ->name('login.store');
-
-
-
-
+require __DIR__.'/auth.php';

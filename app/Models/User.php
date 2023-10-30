@@ -43,6 +43,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+
     public  function countries():HasMany
     {
         return $this->hasMany(country::class);

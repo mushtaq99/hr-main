@@ -14,6 +14,8 @@ class country extends Model
     public $fillable = ['name', 'code','user_id'];
     public $timestamps = false;
 
+
+
     public function user():BelongsTo
     {
         return $this->belongsTo(User::class);
