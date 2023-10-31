@@ -54,7 +54,11 @@
                 <td>{{$dt['name']}}</td>
                 <td>{{$dt['code']}}</td>
                 <td>
-                    &nbsp;&nbsp; <a href="/country/{{$dt['id']}}/edit" class="btn btn-warning btn-sm">Edit</a> &nbsp;
+                    {{--authorization through view--}}
+                    @can('update',$dt)
+                        &nbsp;&nbsp; <a href="/country/{{$dt['id']}}/edit" class="btn btn-warning btn-sm">Edit</a> &nbsp;
+
+                    @endcan
                     <a href="/country/{{$dt['id']}}/delete" class="btn btn-danger btn-sm"> Delete</a>
                 </td>
 
@@ -64,7 +68,7 @@
 
 
     </table>
-{{-- bellow method is used for pagination only like show 10 pages with next and previous button--}}
+    {{-- bellow method is used for pagination only like show 10 pages with next and previous button--}}
     {{ $data->links()}}
 </div>
 </body>

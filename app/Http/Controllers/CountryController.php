@@ -21,7 +21,7 @@ class CountryController extends Controller
     public function saveData(CountryRequest $request)
     {
         country::create([
-            'user_id'=> Auth::user()->id,
+            'user_id' => Auth::user()->id,
             'name' => $request->name,
             'code' => $request->code,
         ]);
@@ -41,11 +41,16 @@ class CountryController extends Controller
     // model binding with route Country model compare the value with info id same then ...
     public function edit(country $info)
     {
+//       $this->authorize('update',$info);
+
         return view('edit', ['info' => $info]);
     }
 
     public function update($id, CountryEditRequest $request)
     {
+
+       //$this->authorize('update_post', $id);
+
         country::where('id', $id)
             ->update([
                 'name' => $request->name,
