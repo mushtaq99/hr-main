@@ -33,7 +33,9 @@ class CountryController extends Controller
     // get the data from db and show them inside view
     public function show()
     {
-        $data = country::paginate(10);
+        // the bellow published method is define inside country model for local scope
+        // just remove the start Scope and with lower case p
+        $data = country::published()->paginate(10);
         return view('show', ['data' => $data]);
 
     }
