@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Cache;
 
 class country extends Model
 {
@@ -22,10 +23,25 @@ class country extends Model
         return $this->belongsTo(User::class);
 
     }
-// add global Scope
+
+
     protected static function booted()
     {
+        // add global Scope
         self::addGlobalScope(new CurrentCountry());
+
+        self::created(function (country $country) {
+            Cache::flush('info');
+
+        });
+
+        self::updated(function (country $country) {
+            Cache::flush('info');
+        });
+
+        self::deleted(function (country $country) {
+            Cache::flush('info');
+        });
     }
 
     // add local scope

@@ -3,6 +3,7 @@
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
+use App\Models\country;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -48,7 +49,7 @@ Route::group([
 // the bellow {info} will be compare to country model inside controller id = id
     Route::get('/{info}/edit', 'edit')
         //bellow middle ware are user for authorization
-    ->middleware(['can:update,info']);
+        ->middleware(['can:update,info']);
 
     Route::put('/{id}', 'update');
 

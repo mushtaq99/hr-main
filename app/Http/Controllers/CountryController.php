@@ -6,6 +6,8 @@ use App\Http\Requests\CountryEditRequest;
 use App\Http\Requests\CountryRequest;
 use App\Models\country;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 
 class CountryController extends Controller
@@ -35,7 +37,20 @@ class CountryController extends Controller
     {
         // the bellow published method is define inside country model for local scope
         // just remove the start Scope and with lower case p
-        $data = country::published()->paginate(10);
+        //$data = country::published()->paginate(10);
+        DB::listen(static function ($q) {
+            logger('listen to queries', [
+                'query' => $q->sql,
+                'bindings' => $q->bindings,
+            ]);
+        });
+
+        $data = Cache::rememberForever('info', function () {
+            return country::paginate(10);
+
+        });
+
+
         return view('show', ['data' => $data]);
 
     }
@@ -51,7 +66,7 @@ class CountryController extends Controller
     public function update($id, CountryEditRequest $request)
     {
 
-       //$this->authorize('update_post', $id);
+        //$this->authorize('update_post', $id);
 
         country::where('id', $id)
             ->update([

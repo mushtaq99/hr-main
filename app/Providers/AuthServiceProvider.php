@@ -7,7 +7,6 @@ use App\Models\User;
 use App\Policies\CountryPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
-use phpDocumentor\Reflection\Types\True_;
 
 class AuthServiceProvider extends ServiceProvider
 {
