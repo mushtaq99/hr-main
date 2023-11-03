@@ -43,18 +43,18 @@ Route::group([
     'controller' => CountryController::class,
     'middleware' => ['auth'],
 ], function () {
-    Route::get('/', 'country');
-    Route::post('/', 'saveData');
+    Route::get('/', 'country')->can('create-post');
+    Route::post('/', 'saveData')->can('create-post');
 
 // the bellow {info} will be compare to country model inside controller id = id
-    Route::get('/{info}/edit', 'edit')
+    Route::get('/{info}/edit', 'edit')->can('edit-post');
         //bellow middle ware are user for authorization
-        ->middleware(['can:update,info']);
+        //->middleware(['can:update,info']);
 
-    Route::put('/{id}', 'update');
+    Route::put('/{id}', 'update')->can('update-post');
 
-    Route::get('/{id}/delete', 'delete');
-    Route::delete('/{info}', 'destroy');
+    Route::get('/{id}/delete', 'delete')->can('delete-post');
+    Route::delete('/{info}', 'destroy')->can('delete-post');;;
 });
 
 Route::get('/show', [CountryController::class, 'show']);
@@ -74,3 +74,4 @@ Route::post('/login', [LoginController::class, 'store'])
     ->name('login.store');
 
 Route::view('/dashboard', 'dashboard')->middleware('auth');
+

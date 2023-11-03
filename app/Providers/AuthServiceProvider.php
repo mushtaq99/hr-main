@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\country;
+use App\Models\Permission;
 use App\Models\User;
 use App\Policies\CountryPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -24,23 +25,37 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        $permissions = Permission::get();
+        foreach ($permissions as $permission) {
+            Gate::define($permission->slug, function (User $user) use ($permission) {
+               // dd($permission->roles->toArray());
+                /* now we will check here if the authentic user role and permission role are same
+                it mean allow that user*/
+               return  $user->hasRole($permission->roles);
+
+
+            });
+
+
+        }
+
 
         // super admin here first call this one if true skip the other one
-       /* Gate::before(function (User $user){
-            if($user->id == 3){
-                return true;
-            }
-            return  null;
+        /* Gate::before(function (User $user){
+             if($user->id == 3){
+                 return true;
+             }
+             return  null;
 
-        });*/
-        Gate::define('update_post', function (User $user, country $country) {
+         });*/
+        /*  Gate::define('update_post', function (User $user, country $country) {
 
-            if ($user->id === $country->user_id) {
-                return true;
-            }
+              if ($user->id === $country->user_id) {
+                  return true;
+              }
 
-            return false;
+              return false;
 
-        });
+          });*/
     }
 }

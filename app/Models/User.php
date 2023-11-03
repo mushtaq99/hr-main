@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -45,9 +46,24 @@ class User extends Authenticatable
     ];
 
 
-    public  function countries():HasMany
+    public function countries(): HasMany
     {
         return $this->hasMany(country::class);
+
+    }
+
+    /*one user can belongs to many roles*/
+    public function roles(): BelongsToMany
+    {
+        // !! symbol convert integer value to boolean
+        return $this->belongsToMany(Role::class);
+    }
+
+    public function hasRole($roles):bool
+    {
+        /*remember one things the above pass parameters is permission roles while
+        bellow roles is user role compare both of them */
+        return !! $roles->intersect($this->roles)->count();
 
     }
 }

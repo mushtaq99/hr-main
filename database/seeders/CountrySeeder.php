@@ -20,7 +20,7 @@ class CountrySeeder extends Seeder
         // bellow for is for create all country info only for uers with name mention above
         country::factory()
             ->for($user)
-            ->count(20)->create();
+            ->count(1)->create();
 
 //        country::create([
 //            'name'=> fake()->unique()->country,

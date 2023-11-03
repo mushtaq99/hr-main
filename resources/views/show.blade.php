@@ -55,11 +55,14 @@
                 <td>{{$dt['code']}}</td>
                 <td>
                     {{--authorization through view--}}
-                    @can('update',$dt)
+                    @can('update-post',$dt)
                         &nbsp;&nbsp; <a href="/country/{{$dt['id']}}/edit" class="btn btn-warning btn-sm">Edit</a> &nbsp;
 
                     @endcan
+
+                    @can('delete-post',$dt)
                     <a href="/country/{{$dt['id']}}/delete" class="btn btn-danger btn-sm"> Delete</a>
+                    @endcan
                 </td>
 
 
