@@ -11,18 +11,19 @@
             @endforeach
             </ul>
         @endif
-        <form action="/roles" method="post">
+        <form action="/roles/{{$info['id']}}" method="post">
             @csrf
+            @method('PUT')
             <div class="form-group mb-4">
                 <label class="mb-1" for="name">Name</label>
-                <input name="name"  class="form-control" id="name" value="{{ old('name') }}">
+                <input name="name"  class="form-control" id="name" value="{{ $info['slug'] }}">
             </div>
 
             <div class="form-group mb-4">
                 <label class="mb-1" for="name">Attach permissions</label>
 
                 <select name="permissions[]" id="permissions" class="form-control" multiple>
-                    @foreach($permissions as $permission)
+                    @foreach($info->permissions as $permission)
                         <option value="{{ $permission->id }}" {{ in_array($permission->id, old('permissions', [])) ? 'selected' : '' }}>{{ $permission->slug }}</option>
                     @endforeach
                 </select>
@@ -33,7 +34,7 @@
 
             </div>
 
-            <x-button label="Submit" />
+            <x-button label="Update" />
         </form>
     </div>
 </x-layout>

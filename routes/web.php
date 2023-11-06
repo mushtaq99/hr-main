@@ -3,6 +3,7 @@
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\RoleController;
 use App\Models\country;
 use Illuminate\Support\Facades\Route;
 
@@ -47,24 +48,25 @@ Route::group([
     Route::post('/', 'saveData')->can('create-post');
 
 // the bellow {info} will be compare to country model inside controller id = id
-    Route::get('/{info}/edit', 'edit')->can('edit-post');
-        //bellow middle ware are user for authorization
-        //->middleware(['can:update,info']);
+    Route::get('/{info}/edit', 'edit')->can('update-post');
+    //bellow middle ware are user for authorization
+    //->middleware(['can:update,info']);
 
     Route::put('/{id}', 'update')->can('update-post');
 
     Route::get('/{id}/delete', 'delete')->can('delete-post');
-    Route::delete('/{info}', 'destroy')->can('delete-post');;;
+    Route::delete('/{info}', 'destroy')->can('delete-post');
 });
 
-Route::get('/show', [CountryController::class, 'show']);
+Route::get('/show', [CountryController::class, 'show'])->name('show');
 
 Route::view('/register', 'register')->name('register');
 
 Route::post('/register', [RegisterController::class, 'create']);
 
 Route::view('/dashboard', 'dashboard')->middleware('auth');
-Route::get('/logout', [LoginController::class, 'destroy']);
+
+Route::get('/logout', [LoginController::class, 'destroy'])->name('logout');
 
 Route::get('/login', [LoginController::class, 'show'])
     ->name('login')
@@ -74,4 +76,20 @@ Route::post('/login', [LoginController::class, 'store'])
     ->name('login.store');
 
 Route::view('/dashboard', 'dashboard')->middleware('auth');
+
+
+Route::group([
+    'prefix' => 'roles',
+    'controller' => RoleController::class,
+    'as' => 'roles.',
+    'middleware' => ['auth'],
+
+], function () {
+    Route::get('/', 'index')->name('index');
+    Route::get('/create', 'create')->name('create');
+    Route::post('/', 'store')->name('store');
+    Route::get('/{id}/edit', 'edit') ; //->can('update-post');
+    Route::put('/{id}', 'update');   //->can('update-post');
+
+});
 

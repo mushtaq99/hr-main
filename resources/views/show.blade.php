@@ -12,7 +12,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <style>
         table, th, td {
-        / / border: 1 px solid black;
             border: 1px solid #ddd;
             text-align: left;
         }
@@ -41,7 +40,9 @@
         <div class="alert alert-success">{{ session('message') }}</div>
     @endif
 
-    <a class="btn btn-primary float-end mb-3" style="float:right" href="/country">Create Country Info</a>
+    @can('create-post')
+        <a class="btn btn-primary float-end mb-3" style="float:right" href="/country">Create Country Info</a>
+    @endcan
     <table class="table" style="width:100%">
         <tr>
             <th>Country Name</th>
@@ -55,13 +56,14 @@
                 <td>{{$dt['code']}}</td>
                 <td>
                     {{--authorization through view--}}
-                    @can('update-post',$dt)
-                        &nbsp;&nbsp; <a href="/country/{{$dt['id']}}/edit" class="btn btn-warning btn-sm">Edit</a> &nbsp;
+                    @can('update-post')
+                        &nbsp;&nbsp; <a href="/country/{{$dt['id']}}/edit" class="btn btn-warning btn-sm">Edit</a>
+                        &nbsp;
 
                     @endcan
 
-                    @can('delete-post',$dt)
-                    <a href="/country/{{$dt['id']}}/delete" class="btn btn-danger btn-sm"> Delete</a>
+                    @can('delete-post')
+                        <a href="/country/{{$dt['id']}}/delete" class="btn btn-danger btn-sm"> Delete</a>
                     @endcan
                 </td>
 

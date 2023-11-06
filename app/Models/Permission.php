@@ -9,8 +9,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Permission extends Model
 {
     use HasFactory;
-    protected $table ='permissions';
-    protected $fillable = ['slug','name'];
+
+    protected $table = 'permissions';
+    protected $fillable = ['slug', 'name'];
 
     public function roles(): BelongsToMany
     {

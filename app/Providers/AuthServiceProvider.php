@@ -25,6 +25,15 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Gate::before(static function (User $user) {
+            if($user->hasRole('super-admin')) {
+                return true;
+            }
+
+            return null;
+        });
+
+
         $permissions = Permission::get();
         foreach ($permissions as $permission) {
             Gate::define($permission->slug, function (User $user) use ($permission) {
