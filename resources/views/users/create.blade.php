@@ -1,31 +1,29 @@
 <x-layout>
 
-    <div class="container mt-5 bg-white" style="width: 600px; padding: 3rem;">
+    <div class="container mt-5 bg-white" style="width: 600px; padding: 3rem;" >
 
         <h2 class="mb-5">Create new role</h2>
 
         @if(count($errors->all()))
             <ul>
-                @foreach($errors->all() as $error)
-                    <li class="text-danger">{{ $error }}</li>
-                @endforeach
+            @foreach($errors->all() as $error)
+                <li class="text-danger">{{ $error }}</li>
+            @endforeach
             </ul>
         @endif
-        <form action="/roles/{{$role['id']}}" method="post">
+        <form action="/roles" method="post">
             @csrf
-            @method('PUT')
             <div class="form-group mb-4">
                 <label class="mb-1" for="name">Name</label>
-                <input name="name" class="form-control" id="name" value="{{ $role['slug'] }}">
+                <input name="name"  class="form-control" id="name" value="{{ old('name') }}">
             </div>
 
             <div class="form-group mb-4">
                 <label class="mb-1" for="name">Attach permissions</label>
-                {{--permissions[] is used to pass permissions is array to server--}}
+
                 <select name="permissions[]" id="permissions" class="form-control" multiple>
                     @foreach($permissions as $permission)
-                        <option
-                            value="{{ $permission->id }}" {{ in_array($permission->id, old('permissions', $attachedPermissions)) ? 'selected' : '' }}>{{ $permission->slug }}</option>
+                        <option value="{{ $permission->id }}" {{ in_array($permission->id, old('permissions', [])) ? 'selected' : '' }}>{{ $permission->slug }}</option>
                     @endforeach
                 </select>
 
@@ -35,7 +33,7 @@
 
             </div>
 
-            <x-button label="Update"/>
+            <x-button label="Submit" />
         </form>
     </div>
 </x-layout>

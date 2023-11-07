@@ -11,9 +11,9 @@
                 @endforeach
             </ul>
         @endif
-        <form action="/roles/{{$role['id']}}" method="post">
+        <form action="/roles/{{$role['id']}}/destroy" method="post">
             @csrf
-            @method('PUT')
+            @method('DELETE')
             <div class="form-group mb-4">
                 <label class="mb-1" for="name">Name</label>
                 <input name="name" class="form-control" id="name" value="{{ $role['slug'] }}">
@@ -23,9 +23,10 @@
                 <label class="mb-1" for="name">Attach permissions</label>
                 {{--permissions[] is used to pass permissions is array to server--}}
                 <select name="permissions[]" id="permissions" class="form-control" multiple>
-                    @foreach($permissions as $permission)
-                        <option
-                            value="{{ $permission->id }}" {{ in_array($permission->id, old('permissions', $attachedPermissions)) ? 'selected' : '' }}>{{ $permission->slug }}</option>
+                    @foreach($permissions as $role)
+                        <option>
+                        {{ $role['slug']}}
+                        </option>
                     @endforeach
                 </select>
 
@@ -35,7 +36,7 @@
 
             </div>
 
-            <x-button label="Update"/>
+            <x-button label="Delete"/>
         </form>
     </div>
 </x-layout>

@@ -4,6 +4,7 @@ use App\Http\Controllers\CountryController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserController;
 use App\Models\country;
 use Illuminate\Support\Facades\Route;
 
@@ -88,8 +89,26 @@ Route::group([
     Route::get('/', 'index')->name('index');
     Route::get('/create', 'create')->name('create');
     Route::post('/', 'store')->name('store');
-    Route::get('/{id}/edit', 'edit') ; //->can('update-post');
-    Route::put('/{id}', 'update');   //->can('update-post');
+    Route::get('/{role}/edit', 'edit'); //->can('update-post');
+    Route::put('/{role}', 'update'); //->can('update-post');
+    Route::get('/{role}/delete', 'delete');
+    Route::delete('/{role}/destroy','destroy');
+
+});
+Route::group([
+    'prefix' => 'users',
+    'controller' => UserController::class,
+    'as' => 'users.',
+    'middleware' => ['auth'],
+
+], function () {
+    Route::get('/', 'index')->name('index');
+    Route::get('/create', 'create')->name('create');
+    Route::post('/', 'store')->name('store');
+    Route::get('/{role}/edit', 'edit'); //->can('update-post');
+    Route::put('/{role}', 'update'); //->can('update-post');
+    Route::get('/{role}/delete', 'delete');
+    Route::delete('/{role}/destroy','destroy');
 
 });
 

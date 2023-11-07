@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\country;
+
 use App\Models\Permission;
 use App\Models\Role;
 use Illuminate\Http\Request;
@@ -11,14 +11,15 @@ class RoleController extends Controller
 {
     public function index()
     {
-        return view('roles.index',[
-            'roles'=>Role::paginate(10)
+        return view('roles.index', [
+            'roles' => Role::paginate(10)
         ]);
 
     }
 
     public function create()
     {
+
         $permissions = Permission::get();
         return view('roles.create', [
             'permissions' => $permissions,
@@ -26,7 +27,7 @@ class RoleController extends Controller
 
     }
 
-    public function store( Request $request)
+    public function store(Request $request)
     {
         // validate
         $request->validate([
@@ -50,28 +51,58 @@ class RoleController extends Controller
 
     }
 
-    public function edit($info)
+    public function edit(Role $role)
     {
-        $del = Role::where('id', $info)->first();
-       return view('roles.edit', ['info' => $del]);
+        // get all permissions
+        $permissions = Permission::get();
+        return view('roles.edit', [
+            'role' => $role,
+            'permissions' => $permissions,
+            'attachedPermissions' => $role->permissions->pluck('id')->toArray(),
+        ]);
     }
 
-    public function update($id ,Request $request )
-    {
-        return $request;
-        /*$role = Role::where('id', $id)
-            ->update([
-                'name' => $request->name,
-                'slug' => Str::slug($request->name),
-            ]);
 
-        // attach permissions
-        $role->permissions()->attach($request->permissions);
+    public function update(Role $role, Request $request)
+    {
+        $request->validate([
+            'name' => ['required', 'min:3'],
+            'permissions' => ['required', 'array'],
+            'permissions.*' => ['integer', 'exists:permissions,id'],
+        ]);
+
+        $role->update([
+            'name' => $request->name,
+            'slug' => Str::slug($request->name),
+        ]);
+
+        $role->permissions()->sync($request->permissions);
 
         // redirect
         return redirect()
             ->route('roles.index')
-            ->with('message', 'Role Updated Successfully.');*/
+            ->with('message', 'Role Updated Successfully.');
 
+    }
+
+    public function delete(Role $role)
+    {
+        //$permissions = Permission::get();
+
+        return view('roles.delete', [
+            'role' => $role,
+            'permissions' => $role->permissions()->get(),
+        ]);
+    }
+
+
+    public function destroy(Role $role)
+    {
+        $role->delete();
+        return redirect()->route('roles.index')->with(['message', "Country {$role->id} Deleted successfully", 'roles' => Role::paginate(10)]);
+//        return view('roles.index', [
+//            'roles' => Role::paginate(10)
+//        ]);
+//        return redirect('/roles')->with('message', "Country {$role->id} Deleted successfully");
     }
 }
