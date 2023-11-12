@@ -38,7 +38,7 @@
                     <td>{{ $user->created_at }}</td>
                     <td>
                         <a href="/users/{{ $user->id }}/edit">edit</a>
-                        <a href="/user/{{ $user->id }}/delete">delete</a>
+                        <a href="/users/{{ $user->id }}/delete">delete</a>
                     </td>
                 </tr>
             @endforeach

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
@@ -23,6 +24,7 @@ Route::get('/test', function () {
     return country::first();
 
 });
+Route::view('/html','roles.editrole');
 
 // now with help of relationship define in models the above method return single country info
 // now if we want to return country info along with user details it is so simple due to relationship define like
@@ -105,10 +107,26 @@ Route::group([
     Route::get('/', 'index')->name('index');
     Route::get('/create', 'create')->name('create');
     Route::post('/', 'store')->name('store');
-    Route::get('/{role}/edit', 'edit'); //->can('update-post');
-    Route::put('/{role}', 'update'); //->can('update-post');
-    Route::get('/{role}/delete', 'delete');
-    Route::delete('/{role}/destroy','destroy');
+    Route::get('/{user}/edit', 'edit'); //->can('update-post');
+    Route::put('/{user}', 'update'); //->can('update-post');
+    Route::get('/{user}/delete', 'delete');
+    Route::delete('/{user}/destroy','destroy');
+
+});
+Route::group([
+    'prefix' => 'permissions',
+    'controller' => PermissionController::class,
+    'as' => 'permissions.',
+    'middleware' => ['auth'],
+
+], function () {
+    Route::get('/', 'index')->name('index');
+    Route::get('/create', 'create')->name('create');
+    Route::post('/', 'store')->name('store');
+    Route::get('/{permission}/edit', 'edit'); //->can('update-post');
+    Route::put('/{permission}', 'update'); //->can('update-post');
+    Route::get('/{permission}/delete', 'delete');
+    Route::delete('/{permission}/destroy','destroy');
 
 });
 

@@ -1,5 +1,3 @@
-<div class="form-group">
-    <label> {{ $attributes['label'] }} </label>
-    <input {{ $attributes }} class="form-control">
+@props(['disabled' => false])
 
-</div>
+<input {{ $disabled ? 'disabled' : '' }} {!! $attributes->merge(['class' => 'rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50']) !!}>

@@ -13,6 +13,9 @@
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs("roles*") ? 'active' : '' }}" aria-current="page" href="/roles">Roles</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs("permissions*") ? 'active' : '' }}" aria-current="page" href="/permissions">Permissions</a>
+                    </li>
                 @endcan
             </ul>
 
