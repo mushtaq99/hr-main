@@ -3,63 +3,81 @@
 namespace App\Http\Controllers;
 
 use App\Models\Permission;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class PermissionController extends Controller
 {
-    public function index()
+    public function create()
+    {
+        return view('permissions.permissions', ['data' => Permission::all()]);
+    }
+
+    public function edit($id): View|\Illuminate\Foundation\Application|Factory|Application
     {
 
-        return view('permissions.index', [
-            'permissions' => Permission::paginate(10)
-        ]);
+        return view('permissions.permission-edit', ['data' => Permission::find($id)]);
+    }
+
+    public function delete($id): View|\Illuminate\Foundation\Application|Factory|Application
+    {
+
+        return view('permissions.permission-delete', ['data' => Permission::find($id)]);
 
     }
 
-    public function create()
+    public function destroy($id)
     {
-        return view('permissions.createpermission');
 
+        $permission = Permission::find($id);
+        $permission->delete();
+        return redirect('/permissions');
+
+    }
+
+    public function update($id, Request $request)
+    {
+
+        $permission = Permission::find($id);
+
+        $permission->update([
+            'name' => $request->permission,
+            'slug' => Str::slug($request->permission)
+        ]);
+
+        return redirect('/permissions');
+
+
+    }
+
+    public function add_permissions()
+    {
+
+        return view('permissions.permission_add');
     }
 
     public function store(Request $request)
     {
+
+
         $request->validate([
-            'name' => ['required', 'min:5']
+            'permissions.*' => ['required', 'min:2'],
         ]);
 
-        Permission::create([
-            'name' => $request->name,
-            'slug' => Str::slug($request->name,),
-        ]);
-        return redirect()->route('permissions.index')->with('message', 'Data Save Sucessfully');
-    }
+        $permissions = $request->permissions;
 
-    public function edit(Permission $permission)
-    {
-        return view('permissions.edit', ['permission' => $permission]);
-    }
 
-    public function update(Request $request, Permission $permission)
-    {
-        $permission->update([
-            'name' => $request->name,
-            'slug' => Str::slug($request->name),
-        ]);
-        return redirect()->route('permissions.index')->with('message','Permission updated !!!');
-    }
-
-    public function delete(Permission $permission)
-    {
-        return view('permissions.delete', ['permission' => $permission]);
+        // Using create method to insert records
+        foreach ($permissions as $p) {
+            Permission::create([
+                'name' => $p,
+                'slug' => Str::slug($p),
+            ]);
+        }
+        return redirect('/permissions');
 
     }
-    public function destroy(Permission $permission)
-    {
-        $permission->delete();
-        return redirect()->route('permissions.index')->with('message','Permission Deleted !!!');
-
-    }
-
 }

@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use App\Models\country;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -15,18 +15,11 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
 
-//        User::factory()->count(10)->create();
-        country::factory()->count(10)->create();
-        $this->call([RolesAndPermissionsSeeder::class]);
-//        country::factory()->count(20)->create();
-//        $this->call([
-//            CountrySeeder::class
-//        ]);
-        // \App\Models\User::factory(10)->create();
+        //$this->call(PermissionSeeder::class);
+        //$this->call(RoleSeeder::class);
+        $this->call(RoleUserSeeder::class);
+        $this->call(UserSeeder::class);
 
-//         \App\Models\User::factory()->create([
-//             'name' => 'Test User',
-//             'email' => 'test@example.com',
-//         ]);
+
     }
 }

@@ -1,12 +1,11 @@
 <?php
 
-use App\Http\Controllers\CountryController;
-use App\Http\Controllers\LoginController;
+use App\Http\Controllers\AddProfileController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\PermissionController;
-use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
-use App\Models\country;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,113 +19,84 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/test', function () {
-    return country::first();
+//Route::get('/', function () {
+//    return view('welcome');
+//});
 
+Route::view('table', 'table');
+
+/*Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');*/
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware('auth');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-Route::view('/html','roles.editrole');
-
-// now with help of relationship define in models the above method return single country info
-// now if we want to return country info along with user details it is so simple due to relationship define like
-
-Route::get('tests', function () {
-
-    // in bellow line the user is actually function that we define inside  country modelÏ
-    return country::with('user')->first();
-
-});
-
-Route::get('/', function () {
-    return view('welcome');
-});
 
 
-// group all the related Routes to one group like bellow
+
+
+
+Route::post('/logout',[AuthenticatedSessionController::class,'destroy'])->name('logout');
+
 Route::group([
-    'prefix' => '/country',
-    'controller' => CountryController::class,
-    'middleware' => ['auth'],
-], function () {
-    Route::get('/', 'country')->can('create-post');
-    Route::post('/', 'saveData')->can('create-post');
+    'controller'=>RoleController::class,
+    'middleware'=>'auth',
+],function (){
 
-// the bellow {info} will be compare to country model inside controller id = id
-    Route::get('/{info}/edit', 'edit')->can('update-post');
-    //bellow middle ware are user for authorization
-    //->middleware(['can:update,info']);
-
-    Route::put('/{id}', 'update')->can('update-post');
-
-    Route::get('/{id}/delete', 'delete')->can('delete-post');
-    Route::delete('/{info}', 'destroy')->can('delete-post');
+    Route::get('/roles','create')->name('view-roles');
+    Route::get('/add/roles','add_roles')->name('create-roles');
+    Route::post('/add/roles','store')->name('store-roles');
+    Route::get('/edit/roles/{id}','edit')->name('edit-roles');
+    Route::put('/update/roles/{id}','update')->name('update-roles');
+    Route::get('/delete/roles/{id}','delete')->name('delete-roles');
+    Route::delete('/delete/roles/{id}','destroy')->name('destroy-roles');
 });
-
-Route::get('/show', [CountryController::class, 'show'])->name('show');
-
-Route::view('/register', 'register')->name('register');
-
-Route::post('/register', [RegisterController::class, 'create']);
-
-Route::view('/dashboard', 'dashboard')->middleware('auth');
-
-Route::get('/logout', [LoginController::class, 'destroy'])->name('logout');
-
-Route::get('/login', [LoginController::class, 'show'])
-    ->name('login')
-    ->middleware('throttle:5,1');
-
-Route::post('/login', [LoginController::class, 'store'])
-    ->name('login.store');
-
-Route::view('/dashboard', 'dashboard')->middleware('auth');
 
 
 Route::group([
-    'prefix' => 'roles',
-    'controller' => RoleController::class,
-    'as' => 'roles.',
-    'middleware' => ['auth'],
-
-], function () {
-    Route::get('/', 'index')->name('index');
-    Route::get('/create', 'create')->name('create');
-    Route::post('/', 'store')->name('store');
-    Route::get('/{role}/edit', 'edit'); //->can('update-post');
-    Route::put('/{role}', 'update'); //->can('update-post');
-    Route::get('/{role}/delete', 'delete');
-    Route::delete('/{role}/destroy','destroy');
-
+    'middleware'=>'auth',
+    'controller'=>PermissionController::class,
+],function (){
+    Route::get('/permissions','create');
+    Route::get('/add/permissions','add_permissions');
+    Route::post('/add/permissions','store');
+    Route::get('/edit/permission/{id}','edit');
+    Route::put('/update/permission/{id}','update');
+    Route::get('/delete/permission/{id}','delete');
+    Route::delete('/delete/permission/{id}','destroy');
 });
+
 Route::group([
-    'prefix' => 'users',
-    'controller' => UserController::class,
-    'as' => 'users.',
-    'middleware' => ['auth'],
-
-], function () {
-    Route::get('/', 'index')->name('index');
-    Route::get('/create', 'create')->name('create');
-    Route::post('/', 'store')->name('store');
-    Route::get('/{user}/edit', 'edit'); //->can('update-post');
-    Route::put('/{user}', 'update'); //->can('update-post');
-    Route::get('/{user}/delete', 'delete');
-    Route::delete('/{user}/destroy','destroy');
-
+    'middleware'=>'auth',
+    'controller'=>UserController::class,
+],function (){
+    Route::get('/users','create');
+    Route::get('/add/users','add_user');
+    Route::post('/add/users','store');
+    Route::get('/edit/users/{id}','edit');
+    Route::put('/update/users/{id}','update');
+    Route::get('/delete/users/{user}','delete');
+    Route::delete('/delete/users/{user}','destroy');
 });
+
 Route::group([
-    'prefix' => 'permissions',
-    'controller' => PermissionController::class,
-    'as' => 'permissions.',
-    'middleware' => ['auth'],
-
-], function () {
-    Route::get('/', 'index')->name('index');
-    Route::get('/create', 'create')->name('create');
-    Route::post('/', 'store')->name('store');
-    Route::get('/{permission}/edit', 'edit'); //->can('update-post');
-    Route::put('/{permission}', 'update'); //->can('update-post');
-    Route::get('/{permission}/delete', 'delete');
-    Route::delete('/{permission}/destroy','destroy');
+    'prefix'=>'profile',
+    'controller'=> AddProfileController::class
+],function (){
+    Route::get('/add/{user}','add');
 
 });
 
+Route::view('/table','table');
+
+
+
+
+require __DIR__.'/auth.php';

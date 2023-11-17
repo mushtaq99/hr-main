@@ -4,105 +4,75 @@ namespace App\Http\Controllers;
 
 use App\Models\Permission;
 use App\Models\Role;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 
 class RoleController extends Controller
 {
-    public function index()
-    {
-        return view('roles.index', [
-            'roles' => Role::paginate(10)
-        ]);
-
-    }
-
     public function create()
     {
 
-        $permissions = Permission::get();
-        return view('roles.create', [
-            'permissions' => $permissions,
-        ]);
+        $data = Role::paginate(10);
 
+      /*  $data = Cache::rememberForever('roles',function (){
+            return  Role::paginate(10);
+        });*/
+        return view('roles.roles',['data'=>$data]);
     }
 
-    public function store(Request $request)
+    public function add_roles()
     {
-        // validate
+
+        return view('roles.roles_add', ['data' => Permission::all()]);
+    }
+
+    public function store(Request $request): RedirectResponse
+    {
+
         $request->validate([
-            'name' => ['required', 'min:3'],
-            'permissions' => ['required', 'array'],
-            'permissions.*' => ['integer', 'exists:permissions,id'],
-        ]);
-        // create role in database
-        $role = Role::create([
-            'name' => $request->name,
-            'slug' => Str::slug($request->name),
-        ]);
-
-        // attach permissions
-        $role->permissions()->attach($request->permissions);
-
-        // redirect
-        return redirect()
-            ->route('roles.index')
-            ->with('message', 'Role was successfully created.');
-
-    }
-
-    public function edit(Role $role)
-    {
-        // get all permissions
-        $permissions = Permission::get();
-        return view('roles.edit', [
-            'role' => $role,
-            'permissions' => $permissions,
-            'attachedPermissions' => $role->permissions->pluck('id')->toArray(),
-        ]);
-    }
-
-
-    public function update(Role $role, Request $request)
-    {
-        $request->validate([
-            'name' => ['required', 'min:3'],
-            'permissions' => ['required', 'array'],
+            'role' => ['required', 'min:2'],
+            'permissions' => ['required'],
             'permissions.*' => ['integer', 'exists:permissions,id'],
         ]);
 
+        $roles = Role::create([
+            'name' => $request->role,
+            'slug' => Str::slug($request->role),
+        ]);
+
+        $roles->permissions()->attach($request->permissions);
+        return redirect('/roles');
+    }
+
+
+    public function edit($id)
+    {
+
+        return view('roles.roles-edit', ['data' => Role::with('permissions')->find($id), 'permissionArray' => Permission::all()]);
+    }
+
+    public function update(Request $request, $id)
+    {
+
+        $role = Role::find($id);
         $role->update([
-            'name' => $request->name,
-            'slug' => Str::slug($request->name),
+            'name' => $request->role,
+            'slug' => Str::slug($request->role),
         ]);
 
         $role->permissions()->sync($request->permissions);
-
-        // redirect
-        return redirect()
-            ->route('roles.index')
-            ->with('message', 'Role Updated Successfully.');
+        return redirect('/roles');
 
     }
 
-    public function delete(Role $role)
+    public function delete($id)
     {
-        //$permissions = Permission::get();
 
-        return view('roles.delete', [
-            'role' => $role,
-            'permissions' => $role->permissions()->get(),
-        ]);
-    }
+        $roles = Role::find($id);
+        $permissions=$roles->permissions()->get();
+        return view('roles.roles-delete', ['roles' =>$roles,'permissions'=>$permissions]);
 
-
-    public function destroy(Role $role)
-    {
-        $role->delete();
-        return redirect()->route('roles.index')->with(['message', "Country {$role->id} Deleted successfully", 'roles' => Role::paginate(10)]);
-//        return view('roles.index', [
-//            'roles' => Role::paginate(10)
-//        ]);
-//        return redirect('/roles')->with('message', "Country {$role->id} Deleted successfully");
     }
 }
