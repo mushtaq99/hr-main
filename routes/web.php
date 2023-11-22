@@ -23,8 +23,6 @@ use Illuminate\Support\Facades\Route;
 //    return view('welcome');
 //});
 
-Route::view('table', 'table');
-
 /*Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');*/
@@ -88,9 +86,11 @@ Route::group([
 
 Route::group([
     'prefix'=>'profile',
-    'controller'=> AddProfileController::class
+    'controller'=> ProfileController::class
 ],function (){
-    Route::get('/add/{user}','add');
+    Route::get('/add/{users}','add');
+
+    Route::post('/store/{users}','store');
 
 });
 
