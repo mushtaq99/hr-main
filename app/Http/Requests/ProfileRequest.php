@@ -23,16 +23,15 @@ class ProfileRequest extends FormRequest
     {
         return [
             /*profile*/
-            'mobile_no' => ['required'],
+            'mobile_no' => ['required','min:11'],
             'alternate_mobile_no' => ['required'],
             'cnic' => ['required'],
             'gender' => ['required'],
             'date_of_birth' => ['required'],
             'marital_status' => ['required'],
             'father_name' => ['required', 'string', 'max:255'],
-            'spouse_name' => ['required'],
+            'spouse_name' => ['required','string', 'max:255'],
             'spouse_cnic' => ['required'],
-
             /*addresses*/
             'district_id' => ['required'],
             'current_address' => ['required'],

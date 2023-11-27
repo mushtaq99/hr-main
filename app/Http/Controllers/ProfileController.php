@@ -17,27 +17,28 @@ class ProfileController extends Controller
 
     public function store($id, ProfileRequest $request)
     {
+
         $user = User::find($id);
-         $response = \auth()->user()
-             ->profiles()
-             ->create([
-                 'user_id' => $user->id,
-                 'cnic' => $request->cnic,
-                 'gender' => $request->gender,
-                 'date_of_birth' => $request->date_of_birth,
-                 'marital_status' => $request->marital_status,
-                 'father_name' => $request->father_name,
-                 'spouse_name' => $request->spouse_name,
-                 'mobile_no' => $request->mobile_no,
-                 'alternate_mobile_no' => $request->alternate_mobile_no,
-                 'spouse_cnic' => $request->spouse_cnic,
-             ]);
+        \auth()->user()
+            ->profiles()
+            ->create([
+                'user_id' => $user->id,
+                'cnic' => $request->cnic,
+                'gender' => $request->gender,
+                'date_of_birth' => $request->date_of_birth,
+                'marital_status' => $request->marital_status,
+                'father_name' => $request->father_name,
+                'spouse_name' => $request->spouse_name,
+                'mobile_no' => $request->mobile_no,
+                'alternate_mobile_no' => $request->alternate_mobile_no,
+                'spouse_cnic' => $request->spouse_cnic,
+            ]);
 
         \auth()->user()
             ->addresses()
             ->create([
                 'user_id' => $user->id,
-                'district_id' => 1,
+                'district_id' => $request->district_id,
                 'current_address' => $request->current_address,
                 'permanent_address' => $request->permanent_address,
                 'postal_code' => $request->postal_code,
@@ -47,8 +48,8 @@ class ProfileController extends Controller
             ->banks()
             ->create([
                 'user_id' => $user->id,
-                'bank_name' => 'mcb',
-                'branch_code' => 1234,
+                'bank_name' => $request->bank_name,
+                'branch_code' => $request->branch_code,
                 'branch_address' => $request->branch_address,
                 'account_title' => $request->account_title,
                 'account_number' => $request->account_number,
