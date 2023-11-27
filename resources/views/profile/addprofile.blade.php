@@ -40,8 +40,7 @@
                                         id="basic-default-message"
                                         class="form-control"
                                         name="cnic"
-                                        aria-describedby="basic-icon-default-message2"
-                                    ></input>
+                                        aria-describedby="basic-icon-default-message2"/>
                                 </div>
                             </div>
 
@@ -53,7 +52,7 @@
                                         class="form-control"
                                         name="date_of_birth"
                                         aria-describedby="basic-icon-default-message2"
-                                    ></input>
+                                    />
                                 </div>
                             </div>
 
@@ -65,7 +64,7 @@
                                         class="form-control"
                                         name="marital_status"
                                         aria-describedby="basic-icon-default-message2"
-                                    ></input>
+                                    />
                                 </div>
                             </div>
 
@@ -77,7 +76,7 @@
                                         class="form-control"
                                         name="spouse_name"
                                         aria-describedby="basic-icon-default-message2"
-                                    ></input>
+                                    />
                                 </div>
                             </div>
 
@@ -89,7 +88,7 @@
                                         class="form-control"
                                         name="spouse_cnic"
                                         aria-describedby="basic-icon-default-message2"
-                                    ></input>
+                                    />
                                 </div>
                             </div>
 

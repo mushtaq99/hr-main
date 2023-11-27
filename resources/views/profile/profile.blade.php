@@ -1,10 +1,18 @@
 <x-layouts.app>
     <div class="container-xxl flex-grow-1 container-p-y">
         <h3 align="center">User Complete Profile</h3>
-
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="row">
             <div class="col-xl">
-                <form method="POST" action="/profile/store/{{$users}}">
+                <form method="POST" action="/profile/store/{{$users->id}}">
                     @csrf
                     <div class="card mb-4">
                         <div class="card-header d-flex justify-content-between align-items-center">
@@ -21,7 +29,7 @@
                             </div>
                             <div class="mb-3">
                                 <label class="form-label" for="basic-default-phone">Alternate Mobile</label>
-                                <input type="tel" name="alternate_no" class="form-control" id="basic-default-phone"
+                                <input type="tel" name="alternate_mobile_no" class="form-control" id="basic-default-phone"
                                        placeholder="0333-">
                             </div>
                             <div class="mb-3">
@@ -37,17 +45,16 @@
                                 </select>
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label" for="multicol-birthdate">Birth Date</label>
-                                <input type="text" id="multicol-birthdate" name="date_of_birth"
-                                       class="form-control dob-picker flatpickr-input active" placeholder="YYYY-MM-DD"
-                                       readonly="readonly">
+                                <label class="form-label" for="birthday">Birth Date</label>
+                                <input type="date" id="birthday" name="date_of_birth"
+                                       class="form-control dob-picker flatpickr-input active" placeholder="YYYY-MM-DD">
                             </div>
 
                             <div class="mb-3 col-lg-6 col-xl-2 col-12 mb-0">
                                 <label class="form-label" for="form-repeater-1-3">Marital Status</label>
                                 <select id="form-repeater-1-3" class="form-select" name="marital_status">
-                                    <option value="Male">Single</option>
-                                    <option value="Female">Married</option>
+                                    <option value="Single">Single</option>
+                                    <option value="Married">Married</option>
                                 </select>
                             </div>
 
@@ -58,9 +65,9 @@
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label" for="basic-default-email">Spouse Name</label>
+                                <label class="form-label" for="basic-default-text">Spouse Name</label>
                                 <div class="input-group input-group-merge">
-                                    <input type="text" id="basic-default-email" name="spouse_name" class="form-control"
+                                    <input type="text" id="basic-default-text" name="spouse_name" class="form-control"
                                            placeholder="yz">
                                 </div>
                             </div>
@@ -76,7 +83,7 @@
                             {{--<button type="submit" class="btn btn-primary">Send</button>--}}
 
                         </div>
-                        {{--address--}}
+                        {{--address details--}}
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h5 class="mb-0">Address Details</h5> <small class="text-muted float-end">Default
                                 label</small>
@@ -97,6 +104,15 @@
                                 <input type="text" class="form-control" name="postal_code" id="basic-default-company"
                                        placeholder="postal code">
                             </div>
+                            <div class="mb-3 col-lg-6 col-xl-2 col-12 mb-0">
+                                <label class="form-label" for="form-repeater-1-4">Select District Name</label>
+                                <select id="form-repeater-1-4" class="form-select" name="district_id">
+                                    <option value="1">Abbotabad</option>
+                                    <option value="2">Peshawar</option>
+                                    <option value="3">Mardan</option>
+                                    <option value="4">Kohat</option>
+                                </select>
+                            </div>
                         </div>
                         {{--Emergency Contact--}}
                         <div class="card-header d-flex justify-content-between align-items-center">
@@ -115,8 +131,8 @@
                                        placeholder="0333-">
                             </div>
                             <div class="mb-3">
-                                <label class="form-label" for="basic-default-company">Relationship</label>
-                                <input type="text" class="form-control" name="relationship" id="basic-default-company"
+                                <label class="form-label" for="basic-default-name">Relationship</label>
+                                <input type="text" class="form-control" name="relationship" id="basic-default-name"
                                        placeholder="relationship with">
                             </div>
                         </div>
@@ -144,23 +160,23 @@
                                        placeholder="0823">
                             </div>
                             <div class="mb-3">
-                                <label class="form-label" for="basic-default-company">Branch Address</label>
-                                <input type="text" class="form-control" name="branch_address" id="basic-default-company"
+                                <label class="form-label" for="basic-default-texxt">Branch Address</label>
+                                <input type="text" class="form-control" name="branch_address" id="basic-default-text"
                                        placeholder="Address">
                             </div>
                             <div class="mb-3">
-                                <label class="form-label" for="basic-default-company">Account Title</label>
-                                <input type="text" class="form-control" name="account_title" id="basic-default-company"
+                                <label class="form-label" for="basic-default-text">Account Title</label>
+                                <input type="text" class="form-control" name="account_title" id="basic-default-text"
                                        placeholder="title">
                             </div>
                             <div class="mb-3">
-                                <label class="form-label" for="basic-default-company">Account Number</label>
-                                <input type="text" class="form-control" name="account_number" id="basic-default-company"
+                                <label class="form-label" for="basic-default-number">Account Number</label>
+                                <input type="text" class="form-control" name="account_number" id="basic-default-number"
                                        placeholder="ac number">
                             </div>
                             <div class="mb-3">
-                                <label class="form-label" for="basic-default-company">IBAN</label>
-                                <input type="text" class="form-control" name="iban" id="basic-default-company"
+                                <label class="form-label" for="basic-default-text">IBAN</label>
+                                <input type="text" class="form-control" name="iban" id="basic-default-text"
                                        placeholder="iban">
                             </div>
                         </div>

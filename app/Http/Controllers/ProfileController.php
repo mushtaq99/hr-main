@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProfileRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -14,22 +15,23 @@ class ProfileController extends Controller
         ]);
     }
 
-    public function store(User $user, Request $request)
+    public function store($id, ProfileRequest $request)
     {
-        \auth()->user()
-            ->profiles()
-            ->create([
-                'user_id' => $user->id,
-                'cnic' => $request->cnic,
-                'gender' => $request->gender,
-                'date_of_birth' => $request->date_of_birth,
-                'marital_status' => $request->marital_status,
-                'father_name' => $request->father_name,
-                'spouse_name' => $request->spouse_name,
-                'mobile_no' => '03122556666',
-                'alternate_mobile_no' => '2222222222',
-                'spouse_cnic' => $request->spouse_cnic,
-            ]);
+        $user = User::find($id);
+         $response = \auth()->user()
+             ->profiles()
+             ->create([
+                 'user_id' => $user->id,
+                 'cnic' => $request->cnic,
+                 'gender' => $request->gender,
+                 'date_of_birth' => $request->date_of_birth,
+                 'marital_status' => $request->marital_status,
+                 'father_name' => $request->father_name,
+                 'spouse_name' => $request->spouse_name,
+                 'mobile_no' => $request->mobile_no,
+                 'alternate_mobile_no' => $request->alternate_mobile_no,
+                 'spouse_cnic' => $request->spouse_cnic,
+             ]);
 
         \auth()->user()
             ->addresses()
