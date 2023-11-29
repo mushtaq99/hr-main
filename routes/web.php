@@ -88,8 +88,9 @@ Route::group([
     'prefix'=>'profile',
     'controller'=> ProfileController::class
 ],function (){
-    Route::get('/add/{user}','add');
 
+    Route::get('/','index');
+    Route::get('/add/{user}','add');
     Route::post('/store/{id}','store');
 
 });

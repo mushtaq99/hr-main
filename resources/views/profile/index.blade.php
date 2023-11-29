@@ -1,6 +1,5 @@
 <x-layouts.app>
     <div class="container-xxl flex-grow-1 container-p-y">
-        <h3 align="center">User Complete Profile</h3>
 
         <div class="row">
             <div class="col-xl">
@@ -11,7 +10,6 @@
                     body {
                         margin-top: 20px;
                     }
-
 
                     /* USER LIST TABLE */
                     .user-list tbody td > img {
@@ -238,44 +236,51 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr>
+                                        @foreach($users as $user)
+                                            <tr>
                                             <td>
                                                 <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt>
-                                                <a href="#" class="user-link">Mila Kunis</a>
-                                                <span class="user-subhead">Admin</span>
+                                                <a href="#" class="user-link">{{$user['name']}}</a>
+                                                @foreach ($user->roles as $role)
+                                                    <span class="user-subhead">{{ $role->name }}</span>
+                                                    @if (!$loop->last)
+                                                        ,
+                                                    @endif
+                                                @endforeach
                                             </td>
                                             <td>
-                                                2013/08/08
+                                                {{ $user['created_at'] }}
                                             </td>
                                             <td class="text-center">
                                                 <span class="label label-default">Inactive</span>
                                             </td>
                                             <td>
-                                                <a href="#"><span class="__cf_email__"
-                                                                  data-cfemail="5d3034313c1d362833342e733e3230">[email&#160;protected]</span></a>
+                                                <span class="user-subhead">{{ $user['email'] }}</span>
+
                                             </td>
                                             <td style="width: 20%;">
                                                 <a href="#" class="table-link">
-<span class="fa-stack">
-<i class="fa fa-square fa-stack-2x"></i>
-<i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
-</span>
+                                                <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
+                                                </span>
                                                 </a>
                                                 <a href="#" class="table-link">
-<span class="fa-stack">
-<i class="fa fa-square fa-stack-2x"></i>
-<i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
-</span>
+                                                <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                                                </span>
                                                 </a>
                                                 <a href="#" class="table-link danger">
-<span class="fa-stack">
-<i class="fa fa-square fa-stack-2x"></i>
-<i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
-</span>
+                                                <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+                                                </span>
                                                 </a>
                                             </td>
                                         </tr>
-                                        <tr>
+                                        @endforeach
+                                      {{--  <tr>
                                             <td>
                                                 <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt>
                                                 <a href="#" class="user-link">George Clooney</a>
@@ -293,22 +298,22 @@
                                             </td>
                                             <td style="width: 20%;">
                                                 <a href="#" class="table-link">
-<span class="fa-stack">
-<i class="fa fa-square fa-stack-2x"></i>
-<i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
-</span>
+                                                <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
+                                                </span>
                                                 </a>
                                                 <a href="#" class="table-link">
-<span class="fa-stack">
-<i class="fa fa-square fa-stack-2x"></i>
-<i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
-</span>
+                                                <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                                                </span>
                                                 </a>
                                                 <a href="#" class="table-link danger">
-<span class="fa-stack">
-<i class="fa fa-square fa-stack-2x"></i>
-<i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
-</span>
+                                                <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+                                                </span>
                                                 </a>
                                             </td>
                                         </tr>
@@ -329,22 +334,22 @@
                                             </td>
                                             <td style="width: 20%;">
                                                 <a href="#" class="table-link">
-<span class="fa-stack">
-<i class="fa fa-square fa-stack-2x"></i>
-<i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
-</span>
+                                                <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
+                                                </span>
                                                 </a>
                                                 <a href="#" class="table-link">
-<span class="fa-stack">
-<i class="fa fa-square fa-stack-2x"></i>
-<i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
-</span>
+                                                <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                                                </span>
                                                 </a>
                                                 <a href="#" class="table-link danger">
-<span class="fa-stack">
-<i class="fa fa-square fa-stack-2x"></i>
-<i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
-</span>
+                                                <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+                                                </span>
                                                 </a>
                                             </td>
                                         </tr>
@@ -366,22 +371,22 @@
                                             </td>
                                             <td style="width: 20%;">
                                                 <a href="#" class="table-link">
-<span class="fa-stack">
-<i class="fa fa-square fa-stack-2x"></i>
-<i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
-</span>
+                                            <span class="fa-stack">
+                                            <i class="fa fa-square fa-stack-2x"></i>
+                                            <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
+                                            </span>
                                                 </a>
                                                 <a href="#" class="table-link">
-<span class="fa-stack">
-<i class="fa fa-square fa-stack-2x"></i>
-<i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
-</span>
+                                                <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                                                </span>
                                                 </a>
                                                 <a href="#" class="table-link danger">
-<span class="fa-stack">
-<i class="fa fa-square fa-stack-2x"></i>
-<i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
-</span>
+                                                <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+                                                </span>
                                                 </a>
                                             </td>
                                         </tr>
@@ -402,22 +407,22 @@
                                             </td>
                                             <td style="width: 20%;">
                                                 <a href="#" class="table-link">
-<span class="fa-stack">
-<i class="fa fa-square fa-stack-2x"></i>
-<i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
-</span>
-                                                </a>
-                                                <a href="#" class="table-link">
-<span class="fa-stack">
-<i class="fa fa-square fa-stack-2x"></i>
-<i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
-</span>
-                                                </a>
-                                                <a href="#" class="table-link danger">
-<span class="fa-stack">
-<i class="fa fa-square fa-stack-2x"></i>
-<i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
-</span>
+                                                <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
+                                                </span>
+                                                    </a>
+                                                    <a href="#" class="table-link">
+                                                    <span class="fa-stack">
+                                                    <i class="fa fa-square fa-stack-2x"></i>
+                                                    <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                                                    </span>
+                                                    </a>
+                                                    <a href="#" class="table-link danger">
+                                                <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+                                                </span>
                                                 </a>
                                             </td>
                                         </tr>
@@ -439,22 +444,22 @@
                                             </td>
                                             <td style="width: 20%;">
                                                 <a href="#" class="table-link">
-<span class="fa-stack">
-<i class="fa fa-square fa-stack-2x"></i>
-<i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
-</span>
+                                                <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
+                                                </span>
                                                 </a>
                                                 <a href="#" class="table-link">
-<span class="fa-stack">
-<i class="fa fa-square fa-stack-2x"></i>
-<i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
-</span>
+                                                <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                                                </span>
                                                 </a>
                                                 <a href="#" class="table-link danger">
-<span class="fa-stack">
-<i class="fa fa-square fa-stack-2x"></i>
-<i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
-</span>
+                                                <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+                                                </span>
                                                 </a>
                                             </td>
                                         </tr>
@@ -476,22 +481,22 @@
                                             </td>
                                             <td style="width: 20%;">
                                                 <a href="#" class="table-link">
-<span class="fa-stack">
-<i class="fa fa-square fa-stack-2x"></i>
-<i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
-</span>
-                                                </a>
+                                                <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
+                                                </span>
+                                                                                                </a>
                                                 <a href="#" class="table-link">
-<span class="fa-stack">
-<i class="fa fa-square fa-stack-2x"></i>
-<i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
-</span>
+                                                <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                                                </span>
                                                 </a>
                                                 <a href="#" class="table-link danger">
-<span class="fa-stack">
-<i class="fa fa-square fa-stack-2x"></i>
-<i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
-</span>
+                                                <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+                                                </span>
                                                 </a>
                                             </td>
                                         </tr>
@@ -512,22 +517,22 @@
                                             </td>
                                             <td style="width: 20%;">
                                                 <a href="#" class="table-link">
-<span class="fa-stack">
-<i class="fa fa-square fa-stack-2x"></i>
-<i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
-</span>
+                                                <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
+                                                </span>
                                                 </a>
                                                 <a href="#" class="table-link">
-<span class="fa-stack">
-<i class="fa fa-square fa-stack-2x"></i>
-<i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
-</span>
+                                                <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                                                </span>
                                                 </a>
                                                 <a href="#" class="table-link danger">
-<span class="fa-stack">
-<i class="fa fa-square fa-stack-2x"></i>
-<i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
-</span>
+                                                <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+                                                </span>
                                                 </a>
                                             </td>
                                         </tr>
@@ -549,22 +554,22 @@
                                             </td>
                                             <td style="width: 20%;">
                                                 <a href="#" class="table-link">
-<span class="fa-stack">
-<i class="fa fa-square fa-stack-2x"></i>
-<i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
-</span>
+                                            <span class="fa-stack">
+                                            <i class="fa fa-square fa-stack-2x"></i>
+                                            <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
+                                            </span>
                                                 </a>
                                                 <a href="#" class="table-link">
-<span class="fa-stack">
-<i class="fa fa-square fa-stack-2x"></i>
-<i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
-</span>
+                                            <span class="fa-stack">
+                                            <i class="fa fa-square fa-stack-2x"></i>
+                                            <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                                            </span>
                                                 </a>
                                                 <a href="#" class="table-link danger">
-<span class="fa-stack">
-<i class="fa fa-square fa-stack-2x"></i>
-<i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
-</span>
+                                                    <span class="fa-stack">
+                                                    <i class="fa fa-square fa-stack-2x"></i>
+                                                    <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+                                                    </span>
                                                 </a>
                                             </td>
                                         </tr>
@@ -585,25 +590,25 @@
                                             </td>
                                             <td style="width: 20%;">
                                                 <a href="#" class="table-link">
-<span class="fa-stack">
-<i class="fa fa-square fa-stack-2x"></i>
-<i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
-</span>
+                                            <span class="fa-stack">
+                                            <i class="fa fa-square fa-stack-2x"></i>
+                                            <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
+                                            </span>
                                                 </a>
                                                 <a href="#" class="table-link">
-<span class="fa-stack">
-<i class="fa fa-square fa-stack-2x"></i>
-<i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
-</span>
+                                            <span class="fa-stack">
+                                            <i class="fa fa-square fa-stack-2x"></i>
+                                            <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                                            </span>
                                                 </a>
                                                 <a href="#" class="table-link danger">
-<span class="fa-stack">
-<i class="fa fa-square fa-stack-2x"></i>
-<i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
-</span>
+                                            <span class="fa-stack">
+                                            <i class="fa fa-square fa-stack-2x"></i>
+                                            <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+                                            </span>
                                                 </a>
                                             </td>
-                                        </tr>
+                                        </tr>--}}
                                         </tbody>
                                     </table>
                                 </div>

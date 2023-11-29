@@ -15,6 +15,27 @@ class ProfileController extends Controller
         ]);
     }
 
+    public function index()
+    {
+        //get user data such as name and role
+        $users = User::all();
+       /* $result = [];
+        foreach ($users as $user){
+            $userData = [
+                'username' => $user->name,
+                'email' => $user->email,
+                'roles' => $user->roles->pluck('name')->toArray()
+            ];
+            $result[] = $userData;
+        }*/
+
+
+        return view('profile.index',[
+            'users'=>$users,
+        ]);
+
+    }
+
     public function store($id, ProfileRequest $request)
     {
 

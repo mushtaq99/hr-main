@@ -45,7 +45,7 @@
         </a>
         <ul class="menu-sub">
             <li class="menu-item">
-                <a href="/users" class="menu-link">
+                <a href="/profile" class="menu-link">
                     <div data-i18n="Perfect Scrollbar">Profile</div>
                 </a>
             </li>
