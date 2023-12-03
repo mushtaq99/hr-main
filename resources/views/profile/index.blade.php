@@ -225,6 +225,12 @@
                         <div class="col-lg-12">
                             <div class="main-box clearfix">
                                 <div class="table-responsive">
+                                    @if(session('error'))
+                                        <div class="alert alert-danger">
+                                            {{ session('error') }}
+                                        </div>
+                                    @endif
+
                                     {{--<h5 class="card-header">Profiles</h5>
                                     <div class="card-body m-100">
                                         <div class="demo-inline-spacing">
@@ -266,19 +272,19 @@
 
                                             </td>
                                             <td style="width: 20%;">
-                                                <a href="profile/edit/{{$user['id']}}" class="table-link">
+                                              {{--  <a href="profile/edit/{{$user['id']}}" class="table-link">
                                                 <span class="fa-stack">
                                                 <i class="fa fa-square fa-stack-2x"></i>
                                                 <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
                                                 </span>
-                                                </a>
-                                                <a href="#" class="table-link">
+                                                </a>--}}
+                                                <a href="profile/edit/{{$user['id']}}" class="table-link">
                                                 <span class="fa-stack">
                                                 <i class="fa fa-square fa-stack-2x"></i>
                                                 <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
                                                 </span>
                                                 </a>
-                                                <a href="#" class="table-link danger">
+                                                <a href="profile/delete/{{$user['id']}}" class="table-link danger">
                                                 <span class="fa-stack">
                                                 <i class="fa fa-square fa-stack-2x"></i>
                                                 <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>

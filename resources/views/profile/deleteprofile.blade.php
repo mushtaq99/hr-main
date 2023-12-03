@@ -12,9 +12,9 @@
         @endif
         <div class="row">
             <div class="col-xl">
-                <form method="POST" action="/profile/update/{{$user['id']}}">
+                <form method="POST" action="/profile/destroy/{{$user['id']}}">
                     @csrf
-                    @method('PUT')
+                    @method('Delete')
                     <div class="card mb-4">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h5 class="mb-0">Basic Information</h5> <small class="text-muted float-end">Default
@@ -193,7 +193,7 @@
                                        value=" {{$bank['iban'] ?? ''}}">
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary">Update</button>
+                        <button type="submit" class="btn btn-primary">Delete</button>
                     </div>
                 </form>
             </div>

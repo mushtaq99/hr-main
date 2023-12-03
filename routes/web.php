@@ -87,6 +87,8 @@ Route::group([
     Route::post('/store/{user}', 'store');
     Route::get('/edit/{user}', 'edit');
     Route::put('/update/{user}', 'update');
+    Route::get('/delete/{user}', 'delete');
+    Route::delete('/destroy/{user}', 'destroy');
 
 
 });

@@ -39,6 +39,21 @@
                                         <span class="input-group-text" id="basic-default-email2">@example.com</span>
                                     </div>
                                 </div>
+                            {{--status--}}
+                            <div class="mb-3 row">
+                                <div class="mb-3 col-lg-6 col-xl-4 col-12 mb-0">
+                                    <label class="form-label" for="form-repeater-1-3">User Status</label>
+                                    {{--<select id="form-repeater-1-3" class="form-select" name="status">
+                                        <option value="Active">Active</option>
+                                        <option value="Inactive">Inactive</option>
+                                    </select>--}}
+                                    <select name="status">
+                                        <option value="active" @if(isset($data['status']) && $data['status'] == 'active') selected @endif>active</option>
+                                        <option value="inactive" @if(isset($data['status']) && $data['status'] == 'inactive') selected @endif>inactive</option>
+                                    </select>
+
+                                </div>
+                            </div>
                                 <div class="mb-3 row">
                                     <label class="form-label" for="basic-default-email">Password</label>
                                     <div class="col-md-10">

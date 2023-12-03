@@ -13,6 +13,7 @@ class ProfileController extends Controller
 {
     public function add(User $user)
     {
+
         return view('profile.profile', [
             'users' => $user,
             'districts' => District::all(),
@@ -21,13 +22,14 @@ class ProfileController extends Controller
 
     public function index()
     {
-        $users = User::all();
+        /*show only those users in profile whose profile data is already added*/
+        $users = User::has('profile')->get();
+
         return view('profile.index', [
             'users' => $users,
         ]);
 
     }
-
 
     public function store($id, ProfileRequest $request)
     {
@@ -101,6 +103,11 @@ class ProfileController extends Controller
 
     public function edit(User $user)
     {
+        /*incase no data found */
+        $profile = $user->profile;
+        if (!$profile) {
+            return redirect()->back()->with('error', 'User data not found for editing.');
+        }
 
         $users = User::with('profile', 'address', 'bank', 'contact')->find($user->id);
         $profile = $users->profile ?? null;
@@ -122,68 +129,107 @@ class ProfileController extends Controller
 
     }
 
-
     public function update(User $user, ProfileRequest $request)
     {
 
-        //$user->update($validatedData);
-        // Update user's profile
-        $user->profile()->update([
-            'mobile_no' => $request->mobile_no,
-            'alternate_mobile_no' => $request->alternate_mobile_no,
-            'cnic' => $request->cnic,
-            'gender' => $request->gender,
-            'date_of_birth' => $request->date_of_birth,
-            'marital_status' => $request->marital_status,
-            'father_name' => $request->father_name,
-            'spouse_name' => $request->spouse_name,
-            'spouse_cnic' => $request->spouse_cnic,
-        ]);
+        try {
+            DB::beginTransaction();
+            //$user->update($validatedData);
+            $user->profile()->update([
+                'mobile_no' => $request->mobile_no,
+                'alternate_mobile_no' => $request->alternate_mobile_no,
+                'cnic' => $request->cnic,
+                'gender' => $request->gender,
+                'date_of_birth' => $request->date_of_birth,
+                'marital_status' => $request->marital_status,
+                'father_name' => $request->father_name,
+                'spouse_name' => $request->spouse_name,
+                'spouse_cnic' => $request->spouse_cnic,
+            ]);
 
-        // Update user's address
-        $user->address()->update([
-            'district_id' => $request->district_id,
-            'current_address' => $request->current_address,
-            'permanent_address' => $request->permanent_address,
-            'postal_code' => $request->postal_code ,
-        ]);
+            // Update user's address
+            $user->address()->update([
+                'district_id' => $request->district_id,
+                'current_address' => $request->current_address,
+                'permanent_address' => $request->permanent_address,
+                'postal_code' => $request->postal_code,
+            ]);
 
-        // Update user's bank information
-        $user->bank()->update([
-            'bank_name' => $request->bank_name,
-            'branch_code' => $request->branch_code,
-            'branch_address' => $request->branch_address ,
-              'account_title' => $request->account_title ,
-              'account_number' => $request->account_number ,
-             'iban' => $request->iban ,
-        ]);
+            // Update user's bank information
+            $user->bank()->update([
+                'bank_name' => $request->bank_name,
+                'branch_code' => $request->branch_code,
+                'branch_address' => $request->branch_address,
+                'account_title' => $request->account_title,
+                'account_number' => $request->account_number,
+                'iban' => $request->iban,
+            ]);
 
-        // Update user's emergency contact information
-        $user->contact()->update([
-            'primary_contact' => $request->primary_contact,
-            'alternate_contact' => $request->alternate_contact,
-            'relationship' => $request->relationship,
-        ]);
-        return redirect()->route('profile');
+            // Update user's emergency contact information
+            $user->contact()->update([
+                'primary_contact' => $request->primary_contact,
+                'alternate_contact' => $request->alternate_contact,
+                'relationship' => $request->relationship,
+            ]);
+
+
+            DB::commit();
+            return redirect()->route('profile');
+        } catch (\Exception $exception) {
+            DB::rollBack();
+        }
 
     }
 
+    public function delete(User $user)
+    {
+        $profile = $user->profile;
+        if (!$profile) {
+            return redirect()->back()->with('error', 'User data not found for deleting.');
+        }
+        $users = User::with('profile', 'address', 'bank', 'contact')->find($user->id);
+        $profile = $users->profile ?? null;
+        $address = $users->address ?? null;
+        $bank = $users->bank ?? null;
+        $emergencyContact = $users->contact ?? null;
+        $districtName = $address && $address->district ? $address->district->name : null;
 
-    /*public function destroy(Request $request): RedirectResponse
-   {
-       $request->validateWithBag('userDeletion', [
-           'password' => ['required', 'current_password'],
-       ]);
+        return view('profile.deleteprofile', [
+            'user' => $user,
+            'profile' => $profile,
+            'address' => $address,
+            'bank' => $bank,
+            'contact' => $emergencyContact,
+            'district_name' => $districtName,
+            'districts' => District::all(),
+        ]);
 
-       $user = $request->user();
+    }
 
-       Auth::logout();
+    public function destroy(User $user)
+    {
+        try {
+            DB::beginTransaction();
 
-       $user->delete();
+            $user->profile()->delete();
 
-       $request->session()->invalidate();
-       $request->session()->regenerateToken();
+            $user->address()->delete();
 
-       return Redirect::to('/');
-   }*/
+            $user->bank()->delete();
+
+            $user->contact()->delete();
+
+            //$user->delete();
+
+            DB::commit();
+            return redirect()->route('profile');
+
+        } catch (\Exception $exception) {
+            DB::rollBack();
+
+            // Handle the exception (e.g., log it or show an error message)
+            return back()->withError('Failed to delete user. Please try again.');
+        }
+
+    }
 }

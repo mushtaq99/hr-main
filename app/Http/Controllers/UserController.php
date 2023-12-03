@@ -28,14 +28,14 @@ class UserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Password::defaults()],
-            'status'=>['required']
+            'status' => ['required']
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'status'=>$request->status
+            'status' => $request->status
         ]);
 
 
@@ -62,25 +62,29 @@ class UserController extends Controller
                 'name' => ['required', 'string', 'max:255'],
                 'email' => 'required|email|unique:users,email,' . $id,
                 'password' => ['required', 'confirmed', Password::defaults()],
-                'roles.*' => ['required', 'integer', 'exists:roles,id']
+                'roles.*' => ['required', 'integer', 'exists:roles,id'],
+                'status' => ['required']
             ]);
 
             $data = [
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
+                'status' => $request->status,
             ];
         } else {
 
             $request->validate([
                 'name' => ['required', 'string', 'max:255'],
                 'email' => 'required|email|unique:users,email,' . $id,
-                'roles.*' => ['required', 'integer', 'exists:roles,id']
+                'roles.*' => ['required', 'integer', 'exists:roles,id'],
+                'status' => ['required']
             ]);
 
             $data = [
                 'name' => $request->name,
                 'email' => $request->email,
+                'status' => $request->status,
             ];
         }
 
