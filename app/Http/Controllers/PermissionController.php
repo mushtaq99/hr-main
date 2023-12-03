@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Permission;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -16,13 +14,13 @@ class PermissionController extends Controller
         return view('permissions.permissions', ['data' => Permission::all()]);
     }
 
-    public function edit($id): View|\Illuminate\Foundation\Application|Factory|Application
+    public function edit($id): View
     {
 
         return view('permissions.permission-edit', ['data' => Permission::find($id)]);
     }
 
-    public function delete($id): View|\Illuminate\Foundation\Application|Factory|Application
+    public function delete($id): View
     {
 
         return view('permissions.permission-delete', ['data' => Permission::find($id)]);

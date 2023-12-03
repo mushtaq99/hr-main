@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('profiles', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(User::class)
-                ->constrained();
+                ->constrained()->cascadeOnDelete()->cascadeOnUpdate();;
             $table->string('mobile_no');
             $table->string('alternate_mobile_no');
             $table->string('cnic');

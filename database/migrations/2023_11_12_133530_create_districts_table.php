@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->boolean('operational');
             $table->string('code')->unique();
             $table->bigInteger('operational_district_id')->nullable();
-            $table->enum('division', ['peshawar', 'malakand', 'mardan', 'kohat', 'abbottabad', 'dikhan', 'bannu'])->nullable();
+            $table->enum('division', ['Bannu', 'Dikhan', 'Kohat', 'Mardan', 'Peshawar', 'Malakand', 'Hazara'])->nullable();
             $table->timestamps();
         });
     }

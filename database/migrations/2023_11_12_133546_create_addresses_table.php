@@ -16,8 +16,8 @@ return new class extends Migration
     {
         Schema::create('addresses', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(User::class)->constrained();
-            $table->foreignIdFor(District::class)->constrained();
+            $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignIdFor(District::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('current_address')->nullable();
             $table->string('permanent_address')->nullable();
             $table->string('postal_code')->nullable();

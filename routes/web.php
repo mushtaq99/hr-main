@@ -19,13 +19,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Route::get('/', function () {
-//    return view('welcome');
-//});
-
-/*Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');*/
+Route::get('/', function () {
+    return view('auth.login');
+});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -38,66 +34,66 @@ Route::middleware('auth')->group(function () {
 });
 
 
-
-
-
-Route::post('/logout',[AuthenticatedSessionController::class,'destroy'])->name('logout');
+Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
 Route::group([
-    'controller'=>RoleController::class,
-    'middleware'=>'auth',
-],function (){
+    'controller' => RoleController::class,
+    'middleware' => 'auth',
+], function () {
 
-    Route::get('/roles','create')->name('view-roles');
-    Route::get('/add/roles','add_roles')->name('create-roles');
-    Route::post('/add/roles','store')->name('store-roles');
-    Route::get('/edit/roles/{id}','edit')->name('edit-roles');
-    Route::put('/update/roles/{id}','update')->name('update-roles');
-    Route::get('/delete/roles/{id}','delete')->name('delete-roles');
-    Route::delete('/delete/roles/{id}','destroy')->name('destroy-roles');
+    Route::get('/roles', 'create')->name('view-roles');
+    Route::get('/add/roles', 'add_roles')->name('create-roles');
+    Route::post('/add/roles', 'store')->name('store-roles');
+    Route::get('/edit/roles/{id}', 'edit')->name('edit-roles');
+    Route::put('/update/roles/{id}', 'update')->name('update-roles');
+    Route::get('/delete/roles/{id}', 'delete')->name('delete-roles');
+    Route::delete('/delete/roles/{id}', 'destroy')->name('destroy-roles');
 });
 
 
 Route::group([
-    'middleware'=>'auth',
-    'controller'=>PermissionController::class,
-],function (){
-    Route::get('/permissions','create');
-    Route::get('/add/permissions','add_permissions');
-    Route::post('/add/permissions','store');
-    Route::get('/edit/permission/{id}','edit');
-    Route::put('/update/permission/{id}','update');
-    Route::get('/delete/permission/{id}','delete');
-    Route::delete('/delete/permission/{id}','destroy');
+    'middleware' => 'auth',
+    'controller' => PermissionController::class,
+], function () {
+    Route::get('/permissions', 'create');
+    Route::get('/add/permissions', 'add_permissions');
+    Route::post('/add/permissions', 'store');
+    Route::get('/edit/permission/{id}', 'edit');
+    Route::put('/update/permission/{id}', 'update');
+    Route::get('/delete/permission/{id}', 'delete');
+    Route::delete('/delete/permission/{id}', 'destroy');
 });
 
 Route::group([
-    'middleware'=>'auth',
-    'controller'=>UserController::class,
-],function (){
-    Route::get('/users','create');
-    Route::get('/add/users','add_user');
-    Route::post('/add/users','store');
-    Route::get('/edit/users/{id}','edit');
-    Route::put('/update/users/{id}','update');
-    Route::get('/delete/users/{user}','delete');
-    Route::delete('/delete/users/{user}','destroy');
+    'middleware' => 'auth',
+    'controller' => UserController::class,
+], function () {
+    Route::get('/users', 'create');
+    Route::get('/add/users', 'add_user');
+    Route::post('/add/users', 'store');
+    Route::get('/edit/users/{id}', 'edit');
+    Route::put('/update/users/{id}', 'update');
+    Route::get('/delete/users/{user}', 'delete');
+    Route::delete('/delete/users/{user}', 'destroy');
 });
 
 Route::group([
-    'prefix'=>'profile',
-    'controller'=> ProfileController::class
-],function (){
+    'prefix' => 'profile',
+    'controller' => ProfileController::class
+], function () {
 
-    Route::get('/','index');
-    Route::get('/add/{user}','add');
-    Route::post('/store/{id}','store');
+    Route::get('/', 'index')->name('profile');
+    Route::get('/add/{user}', 'add');
+    Route::post('/store/{user}', 'store');
+    Route::get('/edit/{user}', 'edit');
+    Route::put('/update/{user}', 'update');
+
 
 });
 
-Route::view('/table','table');
+
+/*for testing purpose only*/
+Route::view('/table', 'table');
 
 
-
-
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

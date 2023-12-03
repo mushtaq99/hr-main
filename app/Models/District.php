@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class District extends Model
 {
@@ -14,4 +14,15 @@ class District extends Model
         'operational_district_id',
         'division',
     ];
+
+    public function address(): BelongsTo
+    {
+        return $this->belongsTo(Address::class);
+    }
+
+    public function addresses()
+    {
+        return $this->hasMany(Address::class, 'district_id');
+    }
+
 }

@@ -6,6 +6,15 @@
             <div class="row">
                 <div class="col-xl">
                     <div class="card mb-4">
+                        @if($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h5 class="mb-0">Add User Details</h5>
                             <small class="text-muted float-end">Default label</small>
@@ -31,6 +40,17 @@
                                         <span class="input-group-text" id="basic-default-email2">@example.com</span>
                                     </div>
                                 </div>
+                            {{--status--}}
+                            <div class="mb-3 row">
+                            <div class="mb-3 col-lg-6 col-xl-4 col-12 mb-0">
+                                <label class="form-label" for="form-repeater-1-3">User Status</label>
+                                <select id="form-repeater-1-3" class="form-select" name="status">
+                                    <option value="Active">Active</option>
+                                    <option value="Inactive">Inactive</option>
+                                </select>
+                            </div>
+                            </div>
+
                                 <div class="mb-3 row">
                                     <label class="form-label" for="basic-default-email">Password</label>
                                     <div class="col-md-10">

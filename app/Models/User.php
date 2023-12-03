@@ -24,6 +24,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'status',
     ];
 
     /**
@@ -53,11 +54,12 @@ class User extends Authenticatable
 
     public function hasRole($roles): bool
     {
-        if(is_string($roles)) {
+        if (is_string($roles)) {
             return $this->roles->contains('slug', $roles);
         }
-        return !! $roles->intersect($this->roles)->count();
+        return !!$roles->intersect($this->roles)->count();
     }
+
     public function profile(): HasOne
     {
         return $this->hasOne(Profile::class);
@@ -85,7 +87,7 @@ class User extends Authenticatable
 
     public function banks()
     {
-        return $this->hasMany(BankAccount::class,'created_by');
+        return $this->hasMany(BankAccount::class, 'created_by');
     }
 
     public function contact()
@@ -95,6 +97,6 @@ class User extends Authenticatable
 
     public function contacts()
     {
-        return $this->hasMany(EmergencyContact::class,'created_by');
+        return $this->hasMany(EmergencyContact::class, 'created_by');
     }
 }
