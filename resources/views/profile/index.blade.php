@@ -231,12 +231,6 @@
                                         </div>
                                     @endif
 
-                                    {{--<h5 class="card-header">Profiles</h5>
-                                    <div class="card-body m-100">
-                                        <div class="demo-inline-spacing">
-                                            <a href="/add/users"><button type="button" class="btn rounded-pill btn-primary">Add Profile</button></a>
-                                        </div>
-                                    </div>--}}
                                     <table class="table user-list">
                                         <thead>
                                         <tr>
@@ -251,60 +245,48 @@
                                         <tbody>
                                         @foreach($users as $user)
                                             <tr>
-                                            <td>
-                                                <img src="https://www.kpfsa.gov.pk/assets/uploads/profile/smalllogo.png" alt>
-                                                <a href="#" class="user-link">{{$user['name']}}</a>
-                                                @foreach ($user->roles as $role)
-                                                    <span class="user-subhead">{{ $role->name }}</span>
-                                                    @if (!$loop->last)
-                                                        ,
-                                                    @endif
-                                                @endforeach
-                                            </td>
-                                            <td>
-                                                {{ $user['created_at'] }}
-                                            </td>
-                                            <td class="text-center">
-                                                <span style="font-size: 90%" class="label label-default">  {{ $user['status'] }}</span>
-                                            </td>
-                                            <td>
-                                                <span class="user-subhead" style="font-size: 120%">{{ $user['email'] }}</span>
+                                                <td>
+                                                    <img
+                                                        src="https://www.kpfsa.gov.pk/assets/uploads/profile/smalllogo.png"
+                                                        alt>
+                                                    <a href="#" class="user-link">{{$user['name']}}</a>
+                                                    @foreach ($user->roles as $role)
+                                                        <span class="user-subhead">{{ $role->name }}</span>
+                                                        @if (!$loop->last)
+                                                            ,
+                                                        @endif
+                                                    @endforeach
+                                                </td>
+                                                <td>
+                                                    {{ $user['created_at'] }}
+                                                </td>
+                                                <td class="text-center">
+                                                    <span style="font-size: 90%"
+                                                          class="label label-default">  {{ $user['status'] }}</span>
+                                                </td>
+                                                <td>
+                                                    <span class="user-subhead"
+                                                          style="font-size: 120%">{{ $user['email'] }}</span>
 
-                                            </td>
-                                            <td style="width: 20%;">
-                                              {{--  <a href="profile/edit/{{$user['id']}}" class="table-link">
-                                                <span class="fa-stack">
-                                                <i class="fa fa-square fa-stack-2x"></i>
-                                                <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
-                                                </span>
-                                                </a>--}}
-                                                <a href="profile/edit/{{$user['id']}}" class="table-link">
-                                                <span class="fa-stack">
-                                                <i class="fa fa-square fa-stack-2x"></i>
-                                                <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
-                                                </span>
-                                                </a>
-                                                <a href="profile/delete/{{$user['id']}}" class="table-link danger">
-                                                <span class="fa-stack">
-                                                <i class="fa fa-square fa-stack-2x"></i>
-                                                <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
-                                                </span>
-                                                </a>
-                                            </td>
-                                        </tr>
+                                                </td>
+                                                <td style="width: 20%;">
+                                                    <div class="demo-inline-spacing">
+                                                        <button type="button" class="btn btn-outline-primary btn-sm"
+                                                                onclick="handleButtonClick('edit', {{ $user['id'] }})">
+                                                            <span class="tf-icons bx bx-pencil me-1"></span>Edit
+                                                        </button>
+
+                                                        <button type="button" class="btn btn-outline-danger btn-sm"
+                                                                onclick="handleButtonClick('delete', {{ $user['id'] }})">
+                                                            <span class="tf-icons bx bx-trash me-1"></span>Delete
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
                                         @endforeach
                                         </tbody>
                                     </table>
                                 </div>
-                               {{-- <ul class="pagination pull-right">
-                                    <li><a href="#"><i class="fa fa-chevron-left"></i></a></li>
-                                    <li><a href="#">1</a></li>
-                                    <li><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li><a href="#">4</a></li>
-                                    <li><a href="#">5</a></li>
-                                    <li><a href="#"><i class="fa fa-chevron-right"></i></a></li>
-                                </ul>--}}
                             </div>
                         </div>
                     </div>
@@ -322,4 +304,23 @@
             </div>
         </div>
     </div>
+    <script>
+        function handleButtonClick(action, userId) {
+            var url;
+            switch (action) {
+                case 'edit':
+                    url = '/profile/edit/' + userId;
+                    break;
+                case 'delete':
+                    url = '/profile/delete/' + userId;
+                    break;
+                default:
+                    // Handle other actions if needed
+                    return;
+            }
+
+            // Navigate to the constructed URL
+            window.location.href = url;
+        }
+    </script>
 </x-layouts.app>
